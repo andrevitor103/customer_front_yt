@@ -4,31 +4,32 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-import PrimeVue from 'primevue/config';
 
-//theme
-import "primevue/resources/themes/lara-light-indigo/theme.css";     
-    
-//core
-import "primevue/resources/primevue.min.css";
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
-import Button from "primevue/button"
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';   // optional
-import Row from 'primevue/row';                   // optional
+import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure your project is capable of handling css files
+import { aliases, md } from 'vuetify/iconsets/md'
+
 
 const app = createApp(App);
-
-app.component('Button', Button);
-app.component('DataTable', DataTable);
-app.component('Column', Column);
-app.component('ColumnGroup', ColumnGroup);
-app.component('Row', Row);
-
+const vuetify = createVuetify({
+    icons: {
+        defaultSet: 'md',
+        aliases,
+        sets: {
+          md
+        },
+      },
+  components,
+  directives,
+})
 
 app.use(router)
 
-app.use(PrimeVue)
+app.use(vuetify)
 
 app.mount('#app')
