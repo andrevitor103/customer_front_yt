@@ -1,52 +1,9 @@
 <template id="CustomerView">
   <div id="users-table">
-    <v-form v-model="valid">
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="name"
-            :rules="nameRules"
-            :counter="10"
-            label="Name"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            :counter="10"
-            label="E-mail"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="document"
-            :rules="documentRules"
-            label="Document"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-btn type="submit" block class="mt-2" @click.prevent="addCustomer">Salvar</v-btn>
-      </v-row>
-    </v-container>
-  </v-form>
+    <FormComponent @add-customer="addCustomer" />
     <v-table>
     <thead>
-      <tr class="remove-line">
+      <tr>
         <th class="text-left">
           Name
         </th>
@@ -65,7 +22,6 @@
       <tr
         v-for="(customer, index) in customerService.customers"
         :key="index"
-        class="remove-line"
       >
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
@@ -84,54 +40,26 @@
 <script>
 
 import { ref } from 'vue';
+import FormComponent from '../components/Form.vue';
 import CustomerService from '../services/CustomerService';
 
 export default {
   name: 'CustomerView',
+  components: {
+    FormComponent
+  },
   data() {
     return {
-      customerService: ref(new CustomerService()),
-      valid: false,
-      name: '',
-      document: '',
-      email: '',
-      nameRules: [
-        value => {
-          if (value) return true
-
-          return 'Name is required.'
-        },
-        value => {
-          if (value?.length <= 10) return true
-
-          return 'Name must be less than 10 characters.'
-        },
-      ],
-      emailRules: [
-        value => {
-          if (value?.length <= 10) return true
-
-          return 'E-mail is requred.'
-        }
-      ],
-      documentRules: [
-        value => {
-          if (value?.length <= 10) return true
-
-          return 'Document is requred.'
-        }
-      ]
+      customerService: ref(new CustomerService())
     }
   },
   methods: {
     edit(index) {
       alert(`editando linha: ${index+1}`);
     },
-    addCustomer() {
-      if (!this.valid) {
-        return
-      }
-      this.customerService.addCustomer(this.name, this.email, this.document)
+    addCustomer(filter) {
+      console.log({ 'filter': filter })
+      this.customerService.addCustomer(filter.name, filter.email, filter.document)
     },
     loadCustomers() {
       this.customerService.loadCustomers()
@@ -151,10 +79,6 @@ export default {
   margin: 0 auto;
 }
 
-  .remove-line > th {
-    border-bottom: 0px !important;
-}
- 
  thead tr:hover, tbody tr:hover {
   background-color:  rgb(216, 247, 220);
  }
