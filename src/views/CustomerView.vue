@@ -23,14 +23,7 @@
         v-for="(customer, index) in customerService.customers"
         :key="index"
       >
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>{{ customer.document }}</td>
-        <td>
-          <v-btn color="black" @click="edit(index)">
-            <v-icon color="white darken-2" class="edit-btn">edit</v-icon>
-          </v-btn>
-        </td> 
+        <RecordTable :customer="customer" />
       </tr>
     </tbody>
   </v-table>
@@ -42,11 +35,13 @@
 import { ref } from 'vue';
 import FormComponent from '../components/Form.vue';
 import CustomerService from '../services/CustomerService';
+import RecordTable from '../components/RecordTable.vue';
 
 export default {
   name: 'CustomerView',
   components: {
-    FormComponent
+    FormComponent,
+    RecordTable
   },
   data() {
     return {

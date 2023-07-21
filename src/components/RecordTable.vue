@@ -1,5 +1,5 @@
-<template>
-     <td>{{ customer.name }}</td>
+<template id="RecordTable">
+        <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.document }}</td>
         <td>
@@ -9,17 +9,9 @@
         </td> 
 </template>
 
-<script lang="js">
+<script>
     export default {
         name: 'RecordTable',
-        data() {
-            return {
-                customer: {
-                    'name': 'andrevitor103',
-                    'email': 'andrevitor103@gmail.com',
-                    'document': '9999999999'
-                }
-            }
-        }
+        props: ['customer']
     }
 </script>
